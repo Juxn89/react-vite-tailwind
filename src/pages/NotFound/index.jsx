@@ -1,7 +1,9 @@
+import { Layout } from '../../components/layout'
+
 export const NotFound = () => {
 	return (
-		<div className="bg-emerald-900">
+		<Layout>
 			NotFound
-		</div>
+		</Layout>
 	)
 }
