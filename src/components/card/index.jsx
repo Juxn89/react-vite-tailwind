@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { PlusIcon } from '@heroicons/react/24/solid'
 import { shoppingCartContext } from '../../context'
 
 export const Card = ({ product }) => {
@@ -19,7 +20,7 @@ export const Card = ({ product }) => {
 					className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
 					onClick={ () => setCount(count + 1) }
 				>
-					+
+					<PlusIcon />
 				</div>
 			</figure>
 			<p className="flex justify-between">
