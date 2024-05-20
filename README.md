@@ -7,3 +7,6 @@
 ## APIs
 - [Platzi Fake Store API](https://fakeapi.platzi.com/)
 - [FakeStore API](https://fakestoreapi.com/)
+
+## Icons
+- [heroicons](https://heroicons.com/)
