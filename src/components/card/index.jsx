@@ -4,12 +4,17 @@ import { shoppingCartContext } from '../../context'
 
 export const Card = ({ product }) => {
 	const { title, price, image, category } = product;
-	const { count, setCount, openProductDetail } = useContext(shoppingCartContext)
+	const { count, setCount, openProductDetail, setProductToShow } = useContext(shoppingCartContext)
+
+	const addToCart = () => {
+		openProductDetail()
+		setProductToShow(product)
+	}
 
 	return (
 		<div 
-			className="bg-white cursor-pointer w-56 h-60 rounded-lg"
-			onClick={ () => openProductDetail() }
+			className="bg-white cursor-pointer w-56 h-60 rounded-lg mb-6"
+			onClick={ addToCart }
 		>
 			<figure className="relative mb-2 w-full h-4/5">
 				<span className="absolute bottom-0 left-0 bg-white/60 rounded-lg text-black text-xs m-2 px-3 py-0.5">
@@ -18,6 +23,7 @@ export const Card = ({ product }) => {
 				<img
 					src={ image }
 					alt={ title }
+					title={ title }
 					className="w-full h-full object-cover rounded-lg"/>
 				<div
 					className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
@@ -27,7 +33,7 @@ export const Card = ({ product }) => {
 				</div>
 			</figure>
 			<p className="flex justify-between">
-				<span className="text-sm font-light">{ title }</span>
+				<span className="text-sm font-light">{ title.length > 50 ? `${title.substring(0, 50) }...` : title }</span>
 				<span className="text-lg font-medium">{ `$${price}` }</span>
 			</p>
 		</div>
