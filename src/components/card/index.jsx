@@ -1,19 +1,26 @@
 import { useContext } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid'
 import { shoppingCartContext } from '../../context'
+import { truncateString } from '../../helpers'
 
 export const Card = ({ product }) => {
 	const { title, price, image, category } = product;
-	const { count, setCount, openProductDetail, setProductToShow, productsInCart, setProductsInCart } = useContext(shoppingCartContext)
+	const { 
+		count, setCount, openProductDetail, setProductToShow, productsInCart, 
+		setProductsInCart, openCheckoutSideMenuOpen 
+	} = useContext(shoppingCartContext)
 
 	const showProduct = () => {
 		openProductDetail()
 		setProductToShow(product)
 	}
 	
-	const addToCart = () => {
+	const addToCart = (event) => {
+		event.stopPropagation()
+		
 		setProductsInCart([...productsInCart, product])
 		setCount(count + 1)
+		openCheckoutSideMenuOpen()
 	}
 
 	return (
@@ -32,13 +39,13 @@ export const Card = ({ product }) => {
 					className="w-full h-full object-cover rounded-lg"/>
 				<div
 					className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-					onClick={ () => addToCart() } 
+					onClick={ (event) => addToCart(event) } 
 				>
 					<PlusIcon className='h6 w-6 text-black'/>
 				</div>
 			</figure>
 			<p className="flex justify-between">
-				<span className="text-sm font-light">{ title.length > 50 ? `${title.substring(0, 50) }...` : title }</span>
+				<span className="text-sm font-light">{ truncateString(title, 50) }</span>
 				<span className="text-lg font-medium">{ `$${price}` }</span>
 			</p>
 		</div>
