@@ -1,10 +1,10 @@
 import { useContext } from 'react';
-import { PlusIcon } from '@heroicons/react/24/solid'
+import { PlusIcon, CheckIcon } from '@heroicons/react/24/solid'
 import { shoppingCartContext } from '../../context'
 import { truncateString } from '../../helpers'
 
 export const Card = ({ product }) => {
-	const { title, price, image, category } = product;
+	const { id, title, price, image, category } = product;
 	const { 
 		count, setCount, openProductDetail, setProductToShow, productsInCart, 
 		setProductsInCart, openCheckoutSideMenuOpen 
@@ -17,10 +17,33 @@ export const Card = ({ product }) => {
 	
 	const addToCart = (event) => {
 		event.stopPropagation()
-		
-		setProductsInCart([...productsInCart, product])
-		setCount(count + 1)
-		openCheckoutSideMenuOpen()
+
+		const isProductInCart = productsInCart.filter(product => product.id === id).length > 0;
+
+		if(!isProductInCart) {
+			setProductsInCart([...productsInCart, product])
+			setCount(count + 1)
+			openCheckoutSideMenuOpen()			
+		}
+	}
+
+	const renderIcon = () => {
+		const isProductInCart = productsInCart.filter(product => product.id === id).length > 0;
+		const backgroundColor = isProductInCart ? 'bg-black' : 'bg-white'
+		const textColor = isProductInCart ? 'text-white' : 'text-black'
+
+		return (
+			<div
+			className={ `absolute top-0 right-0 flex justify-center items-center ${ backgroundColor } w-6 h-6 rounded-full m-2 p-1` }
+			onClick={ (event) => addToCart(event) } 
+			>
+				{ 
+					isProductInCart
+					? <CheckIcon className={ `h6 w-6 ${ textColor }` }/>
+					: <PlusIcon className={ `h6 w-6 ${ textColor }` }/>
+				}
+			</div>
+		)
 	}
 
 	return (
@@ -37,12 +60,7 @@ export const Card = ({ product }) => {
 					alt={ title }
 					title={ title }
 					className="w-full h-full object-cover rounded-lg"/>
-				<div
-					className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-					onClick={ (event) => addToCart(event) } 
-				>
-					<PlusIcon className='h6 w-6 text-black'/>
-				</div>
+				{ renderIcon() }
 			</figure>
 			<p className="flex justify-between">
 				<span className="text-sm font-light">{ truncateString(title, 50) }</span>
