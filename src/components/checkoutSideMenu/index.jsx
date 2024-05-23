@@ -5,7 +5,12 @@ import { shoppingCartContext } from '../../context'
 import './styles.css'
 
 export const CheckoutSideMenu = () => {
-	const { isCheckouSideMenuOpen, closeCheckoutSideMenuOpen, productsInCart } = useContext(shoppingCartContext)
+	const { isCheckouSideMenuOpen, closeCheckoutSideMenuOpen, productsInCart, setProductsInCart } = useContext(shoppingCartContext)
+
+	const handleDelete = (id) => {
+		const filteredProducts = productsInCart.filter(product => product.id !== id)
+		setProductsInCart(filteredProducts)
+	}
 	
 	return (
 		<aside 
@@ -20,7 +25,7 @@ export const CheckoutSideMenu = () => {
 			<div className='px-6 overflow-y-scroll'>
 				{
 					productsInCart.map(product => (
-						<OrderCard key={ product.id } product={ product} />
+						<OrderCard key={ product.id } product={ product} handleDelete={ handleDelete }/>
 					))
 				}
 			</div>
