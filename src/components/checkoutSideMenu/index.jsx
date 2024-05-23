@@ -1,10 +1,11 @@
 import { useContext } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/solid'
+import { OrderCard } from '../OrderCard'
 import { shoppingCartContext } from '../../context'
 import './styles.css'
 
 export const CheckoutSideMenu = () => {
-	const { isCheckouSideMenuOpen, closeCheckoutSideMenuOpen } = useContext(shoppingCartContext)
+	const { isCheckouSideMenuOpen, closeCheckoutSideMenuOpen, productsInCart } = useContext(shoppingCartContext)
 	
 	return (
 		<aside 
@@ -15,6 +16,13 @@ export const CheckoutSideMenu = () => {
 				<div>
 					<XMarkIcon className='size-6 text-black cursor-pointer' onClick={ () => closeCheckoutSideMenuOpen() }/>
 				</div>
+			</div>
+			<div className='px-6'>
+				{
+					productsInCart.map(product => (
+						<OrderCard key={ product.id } product={ product} />
+					))
+				}
 			</div>
 		</aside>
 	)
