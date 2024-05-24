@@ -6,11 +6,29 @@ import { totalPrice } from '../../utils'
 import './styles.css'
 
 export const CheckoutSideMenu = () => {
-	const { isCheckouSideMenuOpen, closeCheckoutSideMenuOpen, productsInCart, setProductsInCart } = useContext(shoppingCartContext)
+	const { 
+		isCheckouSideMenuOpen,
+		closeCheckoutSideMenuOpen,
+		productsInCart,
+		setProductsInCart,
+		order,
+		setOrder } = useContext(shoppingCartContext)
 
 	const handleDelete = (id) => {
 		const filteredProducts = productsInCart.filter(product => product.id !== id)
 		setProductsInCart(filteredProducts)
+	}
+
+	const handleCheckOut = () => {
+		const orderToAdd = {
+			date: '2024.05.24',
+			products: productsInCart,
+			totalProducts: productsInCart.length,
+			totalPrice: totalPrice(productsInCart)
+		}
+
+		setOrder([...order, orderToAdd])
+		setProductsInCart([])
 	}
 	
 	return (
@@ -23,18 +41,24 @@ export const CheckoutSideMenu = () => {
 					<XMarkIcon className='size-6 text-black cursor-pointer' onClick={ () => closeCheckoutSideMenuOpen() }/>
 				</div>
 			</div>
-			<div className='px-6 overflow-y-scroll'>
+			<div className='px-6 overflow-y-scroll flex-1'>
 				{
 					productsInCart.map(product => (
 						<OrderCard key={ product.id } product={ product} handleDelete={ handleDelete }/>
 					))
 				}
 			</div>
-			<div className='px-6'>
-				<p className='flex justify-between items-center'>
+			<div className='px-6 mb-6'>
+				<p className='flex justify-between items-center mb-2'>
 					<span className='font-light'>Total:</span>
 					<span className='font-medium text-2xl'>${ totalPrice(productsInCart) }</span>
 				</p>
+				<button 
+					onClick={ handleCheckOut }
+					className='w-full bg-black py-3 text-white rounded-lg'
+				>
+					Checkout
+				</button>
 			</div>
 		</aside>
 	)

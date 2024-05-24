@@ -8,6 +8,7 @@ export const ShoppingCartProvider = ({ children }) => {
 	const [isCheckouSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false)
 	const [productToShow, setProductToShow] = useState({})
 	const [productsInCart, setProductsInCart] = useState([])
+	const [order, setOrder] = useState([])
 
 	const openProductDetail = () => setIsProductDetailOpen(true)
 	const closeProductDetail = () => setIsProductDetailOpen(false)
@@ -30,7 +31,9 @@ export const ShoppingCartProvider = ({ children }) => {
 				isCheckouSideMenuOpen,
 				setIsCheckoutSideMenuOpen,
 				openCheckoutSideMenuOpen,
-				closeCheckoutSideMenuOpen
+				closeCheckoutSideMenuOpen,
+				order,
+				setOrder
 			}}
 		>
 			{ children }
