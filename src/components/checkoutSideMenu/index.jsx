@@ -22,6 +22,7 @@ export const CheckoutSideMenu = () => {
 
 	const handleCheckOut = () => {
 		const orderToAdd = {
+			id: crypto.randomUUID(),
 			date: '2024.05.24',
 			products: productsInCart,
 			totalProducts: productsInCart.length,

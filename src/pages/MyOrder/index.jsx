@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { ChevronLeftIcon } from '@heroicons/react/24/solid'
 import { OrderCard } from '../../components/OrderCard'
 import { shoppingCartContext } from '../../context'
@@ -7,6 +7,12 @@ import { Layout } from '../../components/layout'
 
 export const MyOrder = () => {
 	const { order } = useContext(shoppingCartContext)
+	const { id } = useParams()
+
+	const products = 
+		id === undefined 
+			? order?.slice(-1)[0].products 
+			: order.find( item => item.id === id).products;
 
 	return (
 		<Layout>
@@ -18,7 +24,7 @@ export const MyOrder = () => {
 			</div>
 			<div className='flex flex-col w-80'>
 				{
-					order?.slice(-1)[0].products.map((product) => (
+					products.map((product) => (
 						<OrderCard key={ product.id } product={ product} />
 					))
 				}
