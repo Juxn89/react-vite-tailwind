@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useContext } from 'react'
+import { shoppingCartContext } from '../context'
 
-export const useFetch = (url) => {	
-	const [ data, setData ] = useState([])
+export const useFetch = (url) => {
+	const { products, setProducts } = useContext(shoppingCartContext)
 
 	useEffect( () => {
 		try {
 			fetch(url)
 				.then(response => response.json())
-				.then(data => setData(data))
+				.then(data => setProducts(data))
 		} catch (error) {
 			console.error(error)
-			setData([])
+			setProducts([])
 		}
 
-		console.log(data)
 	}, [])
 
-	return data;
+	return products;
 }
