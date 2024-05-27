@@ -2,11 +2,21 @@ import { useContext, useEffect } from 'react'
 import { shoppingCartContext } from '../context'
 
 export const useProducts = () => {
-	const { filterProductsByTitle, searchByTitle, filteredProducts, setFilteredProducts, products } = useContext(shoppingCartContext)
+	const { 
+		filteredProducts, 
+		filterProductsByCategory,
+		filterProductsByTitle, 
+		products, 
+		searchByCategory, 
+		searchByTitle, 
+		setFilteredProducts, 
+	} = useContext(shoppingCartContext)
 
 	useEffect( () => {
-		setFilteredProducts(filterProductsByTitle(products, searchByTitle))
-	}, [searchByTitle])
+		if(searchByTitle) setFilteredProducts(filterProductsByTitle(products, searchByTitle))
+		if(searchByCategory) setFilteredProducts(filterProductsByCategory(products, searchByCategory))
+
+	}, [searchByTitle, searchByCategory, setFilteredProducts, products])
 
 	return {
 		filteredProducts

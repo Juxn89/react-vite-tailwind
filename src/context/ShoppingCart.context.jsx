@@ -4,23 +4,28 @@ export const shoppingCartContext = createContext()
 
 export const ShoppingCartProvider = ({ children }) => {
 	const [products, setProducts] = useState([])
-	const [filteredProducts, setFilteredProducts] = useState([])
 	const [count, setCount] = useState(0)
-	const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
-	const [isCheckouSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false)
 	const [productToShow, setProductToShow] = useState({})
 	const [productsInCart, setProductsInCart] = useState([])
 	const [order, setOrder] = useState([])
 	const [searchByTitle, setSearchByTitle] =  useState(null)
-
+	
+	const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
 	const openProductDetail = () => setIsProductDetailOpen(true)
 	const closeProductDetail = () => setIsProductDetailOpen(false)
 	
+	const [isCheckouSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false)
 	const openCheckoutSideMenuOpen = () => setIsCheckoutSideMenuOpen(true)
 	const closeCheckoutSideMenuOpen = () => setIsCheckoutSideMenuOpen(false)
-
+	
+	const [filteredProducts, setFilteredProducts] = useState([])
 	const filterProductsByTitle = (products, title) => {
 		return products?.filter(product => product.title.toLowerCase().includes(title.toLowerCase()) )
+	}
+
+	const [searchByCategory, setSearchByCategory] = useState(null)
+	const filterProductsByCategory = (products, searchByCategory) => {
+		return products?.filter(product => product.category.toLowerCase().includes(searchByCategory.toLowerCase()))
 	}
 
 	return (
@@ -47,7 +52,10 @@ export const ShoppingCartProvider = ({ children }) => {
 				setSearchByTitle,
 				filteredProducts,
 				setFilteredProducts,
-				filterProductsByTitle
+				filterProductsByTitle,
+				searchByCategory,
+				setSearchByCategory,
+				filterProductsByCategory
 			}}
 		>
 			{ children }

@@ -10,8 +10,8 @@ const App = () => {
     <>
 			<ShoppingCartProvider>
 				<BrowserRouter>
-					<Navbar />
 					<AppRoutes />
+					<Navbar />
 					<CheckoutSideMenu />
 				</BrowserRouter>				
 			</ShoppingCartProvider>

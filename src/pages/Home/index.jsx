@@ -10,7 +10,9 @@ export const Home = () => {
 	const { fakeStoreApi } = URLS
 	const products = useFetch(fakeStoreApi.products)
 	const { filteredProducts } = useProducts()
-	const { setSearchByTitle, searchByTitle } = useContext(shoppingCartContext)
+	const { setSearchByTitle, searchByTitle, searchByCategory } = useContext(shoppingCartContext)
+
+	console.log(products)
 
 	const onChangeHandler = (event) => {
 		const text = event.target.value;
@@ -18,15 +20,26 @@ export const Home = () => {
 	}
 
 	const renderProducts = () => {
-		if(searchByTitle?.trim().length > 0) {
-			if(filteredProducts.length > 0)
-				return filteredProducts?.map(product => (<Card key={ product.id } product={ product }/>))
-			else
+		try {
+			if(searchByTitle?.trim().length > 0) {
+				console.log('1')
+				if(filteredProducts.length > 0)
+					return filteredProducts?.map(product => (<Card key={ product.id } product={ product }/>))
+				else
 				return <p>No products to show</p>
+			}
+			else if(searchByCategory?.trim().length > 0) {
+				console.log('2', searchByCategory, filteredProducts)
+				return filteredProducts?.map(product => (<Card key={ product.id } product={ product }/>))
+			}
+			else {
+				console.log('3')
+				return products?.map(product => (<Card key={ product.id } product={ product }/>))
+			}			
+		} catch (error) {
+			console.error(error)
 		}
-		else {
-			return products?.map(product => (<Card key={ product.id } product={ product }/>))
-		}
+
 	}
 
 	return (

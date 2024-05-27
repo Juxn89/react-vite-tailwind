@@ -5,14 +5,17 @@ import { shoppingCartContext } from '../../context'
 import { NavBarRoutesRight, NavbarRoutesLeft } from '../../routes'
 
 export const Navbar = () => {
-	const { count } = useContext(shoppingCartContext)
+	const { count, setSearchByCategory } = useContext(shoppingCartContext)
 	const activeStyle = 'underline underline-offset-4'
 
 	return (
 		<nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light">
 			<ul className="flex items-center gap-3">
 				<li className="font-semibold text-lg">
-					<NavLink to='/'>
+					<NavLink 
+						to='/'
+						onClick={ () => { setSearchByCategory(null) } }
+					>
 						Shop
 					</NavLink>
 				</li>
@@ -21,6 +24,7 @@ export const Navbar = () => {
 						<li key={ link.name }>
 							<NavLink								 
 								to={ link.to }
+								onClick={ () => { setSearchByCategory(link.filter.toLowerCase()) } }
 								className={({ isActive }) => isActive ? activeStyle: 'undefined'}
 							>
 								{ link.name }
